@@ -49,10 +49,10 @@ namespace QuickAccessHub
             if (_isRecording)
             {
                 btnRecordHotkey.Content = "Listening...";
-                btnRecordHotkey.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FAB387"));
+                btnRecordHotkey.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F59E0B"));
                 txtHotkeyDisplay.Text = "Press key combination...";
                 txtHotkeyStatus.Text = "Press Ctrl, Alt, Shift, or Win with a target key.";
-                txtHotkeyStatus.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FAB387"));
+                txtHotkeyStatus.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F59E0B"));
                 txtHotkeyDisplay.Focus();
             }
             else
@@ -65,7 +65,7 @@ namespace QuickAccessHub
         {
             _isRecording = false;
             btnRecordHotkey.Content = "Change Shortcut";
-            btnRecordHotkey.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#89B4FA"));
+            btnRecordHotkey.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#3B82F6"));
         }
 
         private void TxtHotkeyDisplay_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -76,7 +76,6 @@ namespace QuickAccessHub
 
             Key key = (e.Key == Key.System) ? e.SystemKey : e.Key;
 
-            // Ignore modifier keys by themselves
             if (key == Key.LeftCtrl || key == Key.RightCtrl ||
                 key == Key.LeftAlt || key == Key.RightAlt ||
                 key == Key.LeftShift || key == Key.RightShift ||
@@ -94,15 +93,13 @@ namespace QuickAccessHub
                 Key = key
             };
 
-            // Require at least one modifier
             if (!newConfig.Control && !newConfig.Alt && !newConfig.Shift && !newConfig.Windows)
             {
                 txtHotkeyStatus.Text = "Please include at least one modifier (Ctrl, Alt, Shift, or Win).";
-                txtHotkeyStatus.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F38BA8"));
+                txtHotkeyStatus.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#EF4444"));
                 return;
             }
 
-            // Try registering hotkey
             if (_hotkeyManager.Register(newConfig, out string? errorMsg))
             {
                 _currentConfig = newConfig;
@@ -111,13 +108,13 @@ namespace QuickAccessHub
                 _db.SaveSetting("GlobalHotkey", newStr);
 
                 txtHotkeyStatus.Text = $"Successfully registered '{newStr}'!";
-                txtHotkeyStatus.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A6E3A1"));
+                txtHotkeyStatus.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#10B981"));
                 StopRecording();
             }
             else
             {
                 txtHotkeyStatus.Text = errorMsg ?? "Could not register hotkey.";
-                txtHotkeyStatus.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F38BA8"));
+                txtHotkeyStatus.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#EF4444"));
             }
         }
 

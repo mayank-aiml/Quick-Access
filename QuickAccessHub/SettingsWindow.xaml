@@ -1,96 +1,112 @@
 <Window x:Class="QuickAccessHub.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Quick Access Hub Settings" Height="480" Width="520"
+        Title="Quick Access Hub Settings" Height="600" Width="580"
+        MinHeight="480" MinWidth="480"
         WindowStartupLocation="CenterOwner"
-        ResizeMode="NoResize"
-        Background="#1E1E2E" Foreground="#CDD6F4"
+        ResizeMode="CanResizeWithGrip"
+        Background="#0F0F17" Foreground="#F3F4F6"
         FontFamily="Segoe UI">
     <Window.Resources>
+        <!-- Sharp Dark Theme Palette -->
+        <SolidColorBrush x:Key="BgDark" Color="#0F0F17"/>
+        <SolidColorBrush x:Key="CardBg" Color="#161622"/>
+        <SolidColorBrush x:Key="CardBorder" Color="#2A2A3D"/>
+        <SolidColorBrush x:Key="InputBg" Color="#222234"/>
+        <SolidColorBrush x:Key="AccentBlue" Color="#3B82F6"/>
+        <SolidColorBrush x:Key="AccentGreen" Color="#10B981"/>
+        <SolidColorBrush x:Key="TextMain" Color="#F3F4F6"/>
+        <SolidColorBrush x:Key="TextMuted" Color="#9CA3AF"/>
+        <SolidColorBrush x:Key="WarningRed" Color="#EF4444"/>
+
         <Style TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#CDD6F4"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMain}"/>
             <Setter Property="FontSize" Value="13"/>
         </Style>
         <Style TargetType="Button">
-            <Setter Property="Background" Value="#313244"/>
-            <Setter Property="Foreground" Value="#CDD6F4"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="{StaticResource InputBg}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMain}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}"/>
             <Setter Property="Padding" Value="12,6"/>
             <Setter Property="Cursor" Value="Hand"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Background" Value="#313244"/>
-            <Setter Property="Foreground" Value="#F5E0DC"/>
-            <Setter Property="BorderBrush" Value="#45475A"/>
+            <Setter Property="Background" Value="{StaticResource InputBg}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextMain}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}"/>
             <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
 
-    <Grid Margin="24">
+    <Grid Margin="18">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" Text="Settings" FontSize="20" FontWeight="Bold" Foreground="#89B4FA" Margin="0,0,0,20"/>
+        <TextBlock Grid.Row="0" Text="⚙ Settings" FontSize="20" FontWeight="Bold" Foreground="{StaticResource AccentBlue}" Margin="0,0,0,16"/>
 
-        <!-- Section 1: Global Shortcut -->
-        <Border Grid.Row="1" Background="#181825" CornerRadius="8" Padding="16" Margin="0,0,0,16">
-            <StackPanel>
-                <TextBlock Text="Global Keyboard Shortcut" FontWeight="SemiBold" FontSize="14" Foreground="#A6ADC8" Margin="0,0,0,4"/>
-                <TextBlock Text="Press this hotkey from any application to bring up Quick Access Hub." FontSize="12" Foreground="#6C7086" Margin="0,0,0,12"/>
+        <!-- Main Scrollable Content Container -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Margin="0,0,6,0">
 
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="txtHotkeyDisplay" Grid.Column="0" IsReadOnly="True" Text="Ctrl + Space" FontWeight="Bold" FontSize="14" TextAlignment="Center" VerticalAlignment="Center" PreviewKeyDown="TxtHotkeyDisplay_PreviewKeyDown"/>
-                    <Button x:Name="btnRecordHotkey" Grid.Column="1" Content="Change Shortcut" Click="BtnRecordHotkey_Click" Margin="10,0,0,0" Background="#89B4FA" Foreground="#11111B" FontWeight="Bold"/>
-                </Grid>
-                <TextBlock x:Name="txtHotkeyStatus" FontSize="11" Margin="0,6,0,0" TextWrapping="Wrap"/>
+                <!-- Section 1: Global Shortcut -->
+                <Border Background="{StaticResource CardBg}" CornerRadius="8" Padding="16" Margin="0,0,0,14" BorderBrush="{StaticResource CardBorder}" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Global Keyboard Shortcut" FontWeight="Bold" FontSize="14" Foreground="{StaticResource TextMain}" Margin="0,0,0,4"/>
+                        <TextBlock Text="Press this shortcut anywhere in Windows to trigger Quick Access Hub." FontSize="12" Foreground="{StaticResource TextMuted}" Margin="0,0,0,12"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="txtHotkeyDisplay" Grid.Column="0" IsReadOnly="True" Text="Ctrl + Space" FontWeight="Bold" FontSize="14" TextAlignment="Center" VerticalAlignment="Center" PreviewKeyDown="TxtHotkeyDisplay_PreviewKeyDown"/>
+                            <Button x:Name="btnRecordHotkey" Grid.Column="1" Content="Change Shortcut" Click="BtnRecordHotkey_Click" Margin="10,0,0,0" Background="{StaticResource AccentBlue}" Foreground="#0F0F17" FontWeight="Bold" BorderThickness="0"/>
+                        </Grid>
+                        <TextBlock x:Name="txtHotkeyStatus" FontSize="11" Margin="0,8,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Section 2: Windows Startup -->
+                <Border Background="{StaticResource CardBg}" CornerRadius="8" Padding="16" Margin="0,0,0,14" BorderBrush="{StaticResource CardBorder}" BorderThickness="1">
+                    <StackPanel>
+                        <CheckBox x:Name="chkStartWithWindows" Content="Start Quick Access Hub automatically with Windows" FontSize="13" Foreground="{StaticResource TextMain}" Click="ChkStartWithWindows_Click"/>
+                        <TextBlock Text="Runs silently in the system tray in the background on startup without administrator privileges." FontSize="11" Foreground="{StaticResource TextMuted}" Margin="24,4,0,0" TextWrapping="Wrap"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Section 3: Categories -->
+                <Border Background="{StaticResource CardBg}" CornerRadius="8" Padding="16" Margin="0,0,0,10" BorderBrush="{StaticResource CardBorder}" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Manage Categories" FontWeight="Bold" FontSize="14" Foreground="{StaticResource TextMain}" Margin="0,0,0,8"/>
+                        <TextBlock Text="Organize your files, folders, and links into quick category tabs." FontSize="11" Foreground="{StaticResource TextMuted}" Margin="0,0,0,10"/>
+
+                        <ListBox x:Name="lstCategories" MinHeight="140" MaxHeight="220" Background="{StaticResource InputBg}" Foreground="{StaticResource TextMain}" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" Margin="0,0,0,10" DisplayMemberPath="Name"/>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="txtNewCategory" Grid.Column="0"/>
+                            <Button Content="+ Add" Click="BtnAddCategory_Click" Grid.Column="1" Margin="8,0,0,0" Background="{StaticResource AccentGreen}" Foreground="#0F0F17" FontWeight="Bold" BorderThickness="0"/>
+                            <Button Content="Delete" Click="BtnDeleteCategory_Click" Grid.Column="2" Margin="8,0,0,0" Background="{StaticResource WarningRed}" Foreground="#0F0F17" FontWeight="Bold" BorderThickness="0"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
             </StackPanel>
+        </ScrollViewer>
+
+        <!-- Footer / Close Button -->
+        <Border Grid.Row="2" Padding="0,12,0,0" BorderBrush="{StaticResource CardBorder}" BorderThickness="0,1,0,0">
+            <Button Content="Done" Click="BtnDone_Click" HorizontalAlignment="Right" Width="110" Padding="12,7" Background="{StaticResource AccentBlue}" Foreground="#0F0F17" FontWeight="Bold" BorderThickness="0"/>
         </Border>
-
-        <!-- Section 2: Windows Startup -->
-        <Border Grid.Row="2" Background="#181825" CornerRadius="8" Padding="16" Margin="0,0,0,16">
-            <StackPanel>
-                <CheckBox x:Name="chkStartWithWindows" Content="Start Quick Access Hub automatically with Windows" FontSize="13" Foreground="#CDD6F4" Click="ChkStartWithWindows_Click"/>
-                <TextBlock Text="Runs in the system tray in the background on startup without administrator privileges." FontSize="11" Foreground="#6C7086" Margin="24,4,0,0"/>
-            </StackPanel>
-        </Border>
-
-        <!-- Section 3: Categories -->
-        <Border Grid.Row="3" Background="#181825" CornerRadius="8" Padding="16">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <TextBlock Grid.Row="0" Text="Manage Categories" FontWeight="SemiBold" FontSize="14" Foreground="#A6ADC8" Margin="0,0,0,8"/>
-
-                <ListBox x:Name="lstCategories" Grid.Row="1" Background="#313244" Foreground="#CDD6F4" BorderThickness="0" Margin="0,0,0,10" DisplayMemberPath="Name"/>
-
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="txtNewCategory" Grid.Column="0"/>
-                    <Button Content="Add" Click="BtnAddCategory_Click" Grid.Column="1" Margin="8,0,0,0" Background="#A6E3A1" Foreground="#11111B" FontWeight="Bold"/>
-                    <Button Content="Delete" Click="BtnDeleteCategory_Click" Grid.Column="2" Margin="8,0,0,0" Background="#F38BA8" Foreground="#11111B" FontWeight="Bold"/>
-                </Grid>
-            </Grid>
-        </Border>
-
-        <!-- Close Button -->
-        <Button Grid.Row="4" Content="Done" Click="BtnDone_Click" HorizontalAlignment="Right" Width="100" Margin="0,16,0,0" Background="#89B4FA" Foreground="#11111B" FontWeight="Bold"/>
     </Grid>
 </Window>
