@@ -1,0 +1,39 @@
+name: Build & Package Installer
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET 8.0 SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore NuGet Packages
+      run: dotnet restore QuickAccessHub/QuickAccessHub.csproj
+
+    - name: Build & Publish WPF Application
+      run: dotnet publish QuickAccessHub/QuickAccessHub.csproj -c Release -r win-x64 --self-contained true
+
+    - name: Install Inno Setup
+      run: choco install innosetup -y
+
+    - name: Compile Setup Installer
+      run: |
+        & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer/setup.iss
+
+    - name: Upload Installer Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: QuickAccessHub-Setup
+        path: installer_output/QuickAccessHub-Setup.exe

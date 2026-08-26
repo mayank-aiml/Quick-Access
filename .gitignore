@@ -1,0 +1,38 @@
+## Visual Studio / .NET / C#
+[Bb]in/
+[Oo]bj/
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.userHost
+*.userStorage
+*.sublime-workspace
+
+## User database and local application data
+*.db
+*.db-shm
+*.db-wal
+quickaccess.db
+
+## Build & Output Artifacts
+installer_output/
+*.zip
+dotnet-sdk.zip
+dotnet-install.ps1
+
+## Packages & Tool Cache
+*.nupkg
+packages/
+.paket/
+
+## OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
